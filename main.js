@@ -4,7 +4,7 @@ const mainWindow = require('./mainWindow');
 app.on('ready', function() {
   const filter = {
     urls: [
-      '*://*.launchdarkly.com/*',
+      '*://events.launchdarkly.com/*',
       '*://*.newrelic.com/*',
       '*://*.googletagmanager.com/*',
       '*://*.google-analytics.com/*',

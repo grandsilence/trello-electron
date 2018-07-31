@@ -1,12 +1,29 @@
-const singleton = require('./singleton');
-const { BrowserWindow, electron } = require('electron');
+const { app, BrowserWindow, electron } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const settings = require('./settings');
 
+// Singleton
+let self = null;
+const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (self == null) {
+        return;
+    }
+    // Focus created window
+    if (self.isMinimized()) {
+        self.restore();
+    }
+    self.focus();
+});
+if (isSecondInstance) {
+    app.quit();
+}
+
+// Create window
 function createMainWindow () {
     // Create the browser window
-    singleton.mainWindow = new BrowserWindow({
+    self = new BrowserWindow({
       title: 'Trello',
       // Width and height
       width: settings.window.size.width, height: settings.window.size.height,
@@ -15,26 +32,25 @@ function createMainWindow () {
       frame: true, center: true, show: false, autoHideMenuBar: true,
       icon: path.join(__dirname, '_builds', 'icons', 'win', 'icon.ico'),
       webPreferences: {
+        zoomFactor: 0.8,
         nodeIntegration: false,
         preload: path.join(__dirname, 'browser.js'),
         plugins: true
       }
     });
-    const self = singleton.mainWindow;
     const webContents = self.webContents;
 
-    // ready-to-show
     self.loadURL('https://trello.com/');
-  
-    // Inject css and then show window
+    self.on('ready-to-show', function() {
+        self.show();
+    });
+
     webContents.on('dom-ready', function() {
       const css = fs.readFileSync(path.join(__dirname, 'assets/styles/override.css'), 'utf8');
       self.webContents.insertCSS(css);
-
-      self.show();
     });
-/*
-    webContents.on('new-window', (e, url) => {
+
+    /* webContents.on('new-window', (e, url) => {
         e.preventDefault();
         shell.openExternal(url);
     });*/
@@ -63,6 +79,6 @@ function createMainWindow () {
   }
 
 module.exports = {
-    instance: singleton.mainWindow,
+    instance: self,
     init: createMainWindow
 }

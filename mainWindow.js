@@ -43,6 +43,7 @@ function createMainWindow () {
     self.loadURL('https://trello.com/');
     self.on('ready-to-show', function() {
         self.show();
+        self.focus();
     });
 
     webContents.on('dom-ready', function() {

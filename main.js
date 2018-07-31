@@ -25,3 +25,7 @@ app.on('window-all-closed', function (e) {
     app.quit();
   }
 });
+
+app.on('activate', () => {
+  mainWindow.instance.show();
+});

@@ -1,5 +1,5 @@
 const singleton = require('./singleton');
-const {BrowserWindow} = require('electron');
+const { BrowserWindow, electron } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const settings = require('./settings');
@@ -20,21 +20,45 @@ function createMainWindow () {
         plugins: true
       }
     });
-    
+    const self = singleton.mainWindow;
+    const webContents = self.webContents;
+
     // ready-to-show
-    singleton.mainWindow.loadURL('https://trello.com/');
+    self.loadURL('https://trello.com/');
   
-    singleton.mainWindow.webContents.on('dom-ready', function() {
-      // Inject CSS
+    // Inject css and then show window
+    webContents.on('dom-ready', function() {
       const css = fs.readFileSync(path.join(__dirname, 'assets/styles/override.css'), 'utf8');
-      singleton.mainWindow.webContents.insertCSS(css);
-  
-      singleton.mainWindow.show();
+      self.webContents.insertCSS(css);
+
+      self.show();
+    });
+/*
+    webContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        shell.openExternal(url);
+    });*/
+
+    // Show progressbar
+    webContents.session.on('will-download', (event, item) => {
+        const totalBytes = item.getTotalBytes();
+    
+        item.on('updated', () => {
+          self.setProgressBar(item.getReceivedBytes() / totalBytes);
+        });
+    
+        item.on('done', (e, state) => {
+          self.setProgressBar(-1);
+    
+          if (state === 'interrupted') {
+            electron.Dialog.showErrorBox('Download error', 'The download was interrupted');
+          }
+        });
     });
   
     // Save window size to settings before close
-    singleton.mainWindow.on('close', function(e) {
-      settings.window.setSize(singleton.mainWindow.getSize());
+    self.on('close', function(e) {
+      settings.window.setSize(self.getSize());
     });
   }
 

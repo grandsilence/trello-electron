@@ -1,6 +1,6 @@
 {
   "name": "trello-electron",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Trello Electron implementation with some features.",
   "main": "main.js",
   "dependencies": {

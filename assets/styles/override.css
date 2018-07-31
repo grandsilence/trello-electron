@@ -23,6 +23,6 @@ html, body, textarea, input, .richtext_editor,
 }
 
 /* Remove useless elements */
-footer.quiet, a[class^="feedback-link__feedbackLink"] {
+footer.quiet, a[class*="feedback-link__feedbackLink"] {
 	display: none;
 }

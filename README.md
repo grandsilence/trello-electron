@@ -1,12 +1,10 @@
 # Trello Electron [![Build Status](https://travis-ci.com/grandsilence/todoist-trello.svg?branch=master)](https://travis-ci.com/grandsilence/todoist-trello)
 It's a web wrapper for Windows / Linux based on Electron Framework.
 
-![Trello web like interface on Windows](https://raw.githubusercontent.com/grandsilence/todoist-electron/master/assets/images/todoist.gif)
-
 # Features
-- Disabled Google Analytics
+- Disabled Google Analytics / Trello Analytics
 - Replaced fonts to GDI-safe (nice readable when DirectWrite disabled)
-- Removed anoyable elements: social, "all tasks done"
+- Removed anoyable elements
 
 # Roadmap
 - Tray icon

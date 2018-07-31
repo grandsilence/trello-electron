@@ -1,4 +1,4 @@
-# Trello Electron [![Build Status](https://travis-ci.com/grandsilence/todoist-trello.svg?branch=master)](https://travis-ci.com/grandsilence/todoist-trello)
+# Trello Electron [![Build Status](https://travis-ci.com/grandsilence/trello-electron.svg?branch=master)](https://travis-ci.com/grandsilence/trello-electron)
 It's a web wrapper for Windows / Linux based on Electron Framework.
 
 # Features

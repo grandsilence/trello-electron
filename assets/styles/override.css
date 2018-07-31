@@ -1,0 +1,28 @@
+/* Hide scrollbar */
+::-webkit-scrollbar { display: none; }
+
+/* Override default font */
+html, body, textarea, input, .richtext_editor, 
+.google-button span.label,
+.kNpRyX
+{ 
+    font-family: Arial, Tahoma, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+/**
+ *   MAKE ELECTRON APP FEEL MORE NATIVE
+ *   * Prevent dragging all HTML elements, specially:
+ *   	- images
+ *   	- links (anchors)
+ *   * Prevent text selection
+ */
+ *, *::after, *::before {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+}
+
+/* Remove useless elements */
+footer.quiet, a[class^="feedback-link__feedbackLink"] {
+	display: none;
+}

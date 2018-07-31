@@ -1,0 +1,41 @@
+language: node_js
+node_js:
+  - 8
+before_install:
+  - sudo apt-get install -y wine
+install:
+    - npm install
+script:
+    - APP_VERSION=v0.1.$TRAVIS_BUILD_NUMBER
+    - npm run build-win
+    - zip -r Windows_$APP_VERSION.zip _builds/todoist-electron-win32-ia32
+before_deploy:
+    - git config --local user.name "Grand Silence"
+    - git config --local user.email "mixtape774@gmail.com"
+    - git tag "$APP_VERSION"
+deploy:
+  provider: releases
+  api_key:
+    secure: "eQWFEQ76PyZ3NFfpvfszg9Euaw/6S25wT6XC77oVLpF8XZEjo4F77EtyWvDrN9gJ5bdfRowFH1nIfUp30308qpgPdpOjjO6DhWUO3lytll9x2kma2+NPD+wkMUCg2VpEYBUPTRlFHRoKqLTldWO65eiHiySzRDgF55v+SJ9bp3dn8Gi7J/0Rc7ikGJX2DIYClG3CXPFDGivkLkdE3M97CzORFNCjDyxNKs8FS8dnb4iGt+U20NHpHGk97R6x9ChYCbrk5i+qr/se+zA3faW1co2RJdd3CUS7y9bFmghPIRIB/8EI650zKf3lQpawSR8W43tc2ejtmJc0W0rpMhledslaJ3rZmfVAI3K5bCQp1LhXGeWXTzpzyl0HhfpwTL8FfDAQ3zT23ZxVf9R4zm53SA9Txp0fETd7lg5oTN4xxlPDRk2ZqgZOs1OrG9FeNJN8z5MEKReCp2AfqhSS2XRoOP7wIafKdLPaDd9h1jJy7oDa1mWoijEtUwaEglQ7Z5WIwxAQ0qBhH4u/GCid6lynE/DQ8qWci4Y17+bQFXy3ZyWpPpsBD9BFUYaxAxkfVDsBPceSfjsjcpDjoKo1bhaGGtJvYIj8mNbAO9PRsWVci8glI8IDHZtSk9WXFrAB3nX0ivwCkRk2bBdxpt/Q9Q0jn1gBfcRLRJnPByrfnPhj2Uw="
+  file:
+    - "Windows_$APP_VERSION.zip"
+  skip_cleanup: true
+  on:
+    tags: false
+    branch: master
+branches:
+  only:
+  - master
+skip_commits:
+  files:
+    - .gitignore
+    - jsconfig.json
+    - launch.json
+    - package.json
+    - package-lock.json
+    - README.md
+    - rebuild_win.bat
+cache:
+  apt: true
+  directories:
+    - node_modules

@@ -1,0 +1,53 @@
+/* === Draggable windows elements === */
+
+/* Draggable top bar */
+#top_bar {
+    -webkit-app-region: drag;
+}
+/*
+.left_menu_toggle, .quick_find input, .quick_find img,
+#sync_state_icon, #quick_add_task_holder, #before_pie, #top_completed_holder,
+#notifications_counter, #gear_holder {
+    -webkit-app-region: no-drag !important;
+}*/
+
+/* Draggable left menu empty content */
+#left_menu {
+    -webkit-app-region: drag;
+}
+
+#top_filters {
+    padding-top: 0 !important;
+    margin-top: 24px !important;
+}
+/*
+#top_filters, .expansion_panel {
+    -webkit-app-region: no-drag;
+}*/
+#left_menu > #list_holder {
+    padding-bottom: 0 !important;
+    margin-bottom: 30px;
+}
+
+/* Override large link close button for draggable window */
+.left_menu_show .left_menu_toggle {
+    padding-right: 40px !important;
+}
+
+/* Smaller search box */
+/*.quick_find {
+    width: 135px !important;
+}*/
+@media only screen and (max-width: 750px) {
+    #quick_find .quick_find {
+        width: 115px !important;
+    }
+}
+
+/* Disable ghost link drag for image "Completed today" */
+/*#completed_today > .illustration {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}*/

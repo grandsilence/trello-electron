@@ -4,10 +4,10 @@ node_js:
 before_install:
   - sudo apt-get install -y wine
 install:
-    - npm install
+    - yarn
 script:
     - APP_VERSION=v0.1.$TRAVIS_BUILD_NUMBER
-    - npm run build-win
+    - yarn run build-win
     - zip -r Windows_$APP_VERSION.zip _builds/trello-electron-win32-ia32
 before_deploy:
     - git config --local user.name "Grand Silence"
